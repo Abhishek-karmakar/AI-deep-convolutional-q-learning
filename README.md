@@ -74,7 +74,7 @@
 
 --------------------------------------
 
-	- create a method to count_neurons, Since the neural network can accept batches of 
+create a method to count_neurons
 
 	- we need a 3 step proess. 
 	1.> apply convolution to the input images.
@@ -93,7 +93,8 @@
 
 -------------------------------------
 
-	create a forward function
+create a forward function
+
         x = F.relu(F.max_pool2d(self.convolution1(x), 3, 2))
         x = F.relu(F.max_pool2d(self.convolution2(x), 3, 2))
         x = F.relu(F.max_pool2d(self.convolution3(x), 3, 2))
@@ -104,5 +105,10 @@
             x = F.relu(self.fc1(x))
 
     Then we need to propagate from the hidden layer to the output layer. 
-    		
 
+
+-------------------------------------
+
+Now we will make the Body of the class which will move the player based on the mind created earlier. We will use Softmax function from PyTorch
+
+	

@@ -38,6 +38,8 @@ class CNN(nn.module):
         self.fc1 = nn.Linear(in_features = self.count_neurons(1,80,80), out_features = 40)
         self.fc2 = nn.Linear(in_features = 40, out_features = number_actions)
         
+        #After the convolution we have to flatten the images and we get the vector to input variable. 
+
     def count_neurons(self, image_dim):
         x = Variable(torch.rand(1, *image_dim))
         x = F.relu(F.max_pool2d(self.convolution1(x), 3, 2))
@@ -53,9 +55,14 @@ class CNN(nn.module):
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
         return x
-#After the convolution we have to flatten the images and we get the vector to input variable. 
     
 #making the body - Use the body to specify the method how to play the action.
+class SoftmaxBody(nn.Module):
+    
+    def __init__(self, T):
+        super(SoftmaxBody, self).__init__()
+        self.T = T
+    
     
 #make the AI - Assemble the brain and the body
     
