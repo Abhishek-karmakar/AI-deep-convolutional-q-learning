@@ -69,7 +69,12 @@ class SoftmaxBody(nn.Module):
         return actions
         
 #make the AI - Assemble the brain and the body
+class AI:
     
+    def __init__(self, brain, body):
+        self.brain = brain
+        self.body = body
+        
 
 #part 2 - Implement Deep Convolutional Q-Learning
     #train the AI.

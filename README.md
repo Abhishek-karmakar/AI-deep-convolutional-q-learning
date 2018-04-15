@@ -118,3 +118,9 @@ Now we will make the Body of the class which will move the player based on the m
 	There are 7 possible actions. Hence there is a distribution of 7 probablilities 
 
 	We can use the T (temperature) parameter to configure the actions. The higher the T, the lower the actions.  
+
+
+----------------------------
+Make the AI class which will use the forward function in it to finally join the body and the brain. 
+
+	
