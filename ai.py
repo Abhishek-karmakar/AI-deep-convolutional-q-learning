@@ -93,4 +93,7 @@ cnn = CNN(number_actions)
 softmax_body = SoftmaxBody(T = 1.0)
 ai = AI(brain = cnn, body = softmax_body)
 
+# setting up the Experience Replay
+n_steps = experience_replay.NStepProgress(env = doom_env, ai = ai, n_step = 10) #learning is happening every 10 steps
+memory = experience_replay.ReplayMemory(n_steps = n_steps, capacity = 10000)
 

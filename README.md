@@ -146,3 +146,6 @@ Make the AI class which will use the forward function in it to finally join the 
 		softmax_body = SoftmaxBody(T = 1.0)
 		ai = AI(brain = cnn, body = softmax_body)
 
+setting up the Eligibility trace using 10000 total steps in Eligibility trace.
+	
+		n_steps = experience_replay.NStepProgress(env = doom_env, ai = ai, n_step = 10) #learning is happening every 10 steps
