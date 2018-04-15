@@ -4,9 +4,7 @@
 
 """
 Created on Sun Apr 15 20:35:15 2018
-
 @author: abhishek
-
 """
 #importing the libraries
 import numpy as np # to work with arrys
@@ -32,10 +30,10 @@ class CNN(nn.module):
     def __init__(self, number_actions):
         super(CNN, self).__init__()
         #first create the convolution cnnection then pass it to neural network to create the full connection
-        self.convolution1 = nn.Conv2d(in_channels = 1, out_channels = 32 , kernel_size = 5) #This will detect one featuer and pass to the next convolutional layer.
-        self.convolution2 = nn.Conv2d(in_channels = 32, out_channels = 32 , kernel_size = 3) 
-        self.convolution3 = nn.Conv2d(in_channels = 32, out_channels = 64 , kernel_size = 2)
-        self.fc1 = nn.Linear(in_features = self.count_neurons(1,80,80), out_features = 40)
+        self.convolution1 = nn.Conv2d(in_channels = 1, out_channels = 32, kernel_size = 5) #This will detect one featuer and pass to the next convolutional layer.
+        self.convolution2 = nn.Conv2d(in_channels = 32, out_channels = 32, kernel_size = 3) 
+        self.convolution3 = nn.Conv2d(in_channels = 32, out_channels = 64, kernel_size = 2)
+        self.fc1 = nn.Linear(in_features = self.count_neurons((1, 80, 80)), out_features = 40)
         self.fc2 = nn.Linear(in_features = 40, out_features = number_actions)
         
         #After the convolution we have to flatten the images and we get the vector to input variable. 
@@ -64,17 +62,17 @@ class SoftmaxBody(nn.Module):
         self.T = T
     
     def forward(self, outputs):
-        probs = F.softmax(outputs * self.T)
+        probs = F.softmax(outputs * self.T)   
         actions = probs.multinomial()
         return actions
         
 #make the AI - Assemble the brain and the body
 class AI:
-    
+
     def __init__(self, brain, body):
         self.brain = brain
         self.body = body
-        
+
     def __call__(self, inputs):
         input = Variable(torch.from_numpy(np.array(inputs, dtype = np.float32))) #so the array has float32 type variables
         output = self.brain(input)
@@ -103,9 +101,9 @@ def eligibility_trace(batch):
     inputs = []
     targets = []
     for series in batch:
-        input = Variable(torch.from_numpy(np.array([series[0].state, series[-1].state]), dtype = np.float32)))
+        input = Variable(torch.from_numpy(np.array([series[0].state, series[-1].state], dtype = np.float32)))
         output = cnn(input)
-        cumul_reward = 0.0 if series[-1].done else output[1].data.max
+        cumul_reward = 0.0 if series[-1].done else output[1].data.max()
         for step in reversed(series[:-1]):
             cumul_reward = step.reward + gamma * cumul_reward
         state = series[0].state
@@ -113,14 +111,13 @@ def eligibility_trace(batch):
         target[series[0].action] = cumul_reward
         inputs.append(state)
         targets.append(target)
-    return torch.from_numpy(np.array(inputs, dtype= float32)), torch.stack(targets)
+    return torch.from_numpy(np.array(inputs, dtype = np.float32)), torch.stack(targets)
 
 #Making the moving average on 100 steps. 
 class MA:
     def __init__(self, size):
         self.list_of_rewards = []
         self.size = size
-    
     def add(self, rewards):
         if isinstance(rewards, list):
             self.list_of_rewards += rewards
@@ -128,12 +125,31 @@ class MA:
             self.list_of_rewards.append(rewards)
         while len(self.list_of_rewards) > self.size:
             del self.list_of_rewards[0]
-    
     def average(self):
-        return np.mean(self.list_of_rewards)  
-    
+        return np.mean(self.list_of_rewards)
 ma = MA(100) #because we want out moving our average the AI on 100 steps. 
-        
 
 #Training the AI
-    
+loss = nn.MSELoss()
+optimizer = optim.Adam(cnn.parameters(), lr = 0.001)
+nb_epochs = 100
+for epoch in range(1, nb_epochs + 1):
+    memory.run_steps(200)
+    for batch in memory.sample_batch(128): #use a common 32 as a batch size, since we are using 10 steps , thats why we are using 128
+        inputs, targets = eligibility_trace(batch)
+        inputs, targets = Variable(inputs), Variable(targets)
+        predictions = cnn(inputs)
+        loss_error = loss(predictions, targets)
+        optimizer.zero_grad()
+        loss_error.backward()
+        optimizer.step()
+    rewards_steps = n_steps.rewards_steps()
+    ma.add(rewards_steps)
+    avg_reward = ma.average()
+    print("Epoch: %s, Average Reward: %s" % (str(epoch), str(avg_reward)))
+    if avg_reward >= 1500:
+        print("Congrats, your AI wins")
+        break
+
+#Closing the DOOM environment
+doom_env.close()

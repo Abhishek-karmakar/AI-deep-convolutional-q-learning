@@ -182,3 +182,5 @@ Create a Moving average of 100 steps while doing the training.
     def average(self):
         return np.mean(self.list_of_rewards)    
 
+Wrapping it up
+	
