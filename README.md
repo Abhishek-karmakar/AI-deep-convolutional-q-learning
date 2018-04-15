@@ -52,3 +52,24 @@
 
 	The visual page is not present upfont but can be seen under this link 
 		https://gym.openai.com/envs/DoomCorridor-v0/
+
+	
+	# Making the CNN
+
+	self.convolution1 = nn.Conv2d(in_channels =1, out_channels = 32, kernel_size)
+
+	input - is One Blackand white images. 
+	output - is a image with 32 type of detected images. 
+	Kernel - will have a 5x5 image size.
+
+	self.convulation2 = nn.Conv2d(in_channels = 1, out_channels = 32 , kernel_size = 5)
+
+    self.convulation3 = nn.Conv2d(in_channels = 1, out_channels = 32 , kernel_size = 5)     
+        
+    self.fc1 = nn.Linear(in_features = number_neurons, out_features = 40)
+
+    self.fc2 = nn.Linear(in_features = 40, out_features = number_actions)
+
+    This will have a complete CNN whih will have 3 convolutional layers and 2 full connection layer. 
+
+
