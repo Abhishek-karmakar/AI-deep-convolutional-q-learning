@@ -72,4 +72,21 @@
 
     This will have a complete CNN whih will have 3 convolutional layers and 2 full connection layer. 
 
+--------------------------------------
+
+	- create a method to count_neurons, Since the neural network can accept batches of 
+
+	- we need a 3 step proess. 
+	1.> apply convolution to the input images.
+	2.> Max pooling on the convoluted images.  
+	3.> Activate the neurons on the pooled convoluted images. 
+        
+        x = F.relu(F.max_pool2d(self.convolution1(x), 3, 2))
+
+    - To propagate in three convolutional layer. 
+
+        x = F.relu(F.max_pool2d(self.convolution1(x), 3, 2))
+        x = F.relu(F.max_pool2d(self.convolution2(x), 3, 2))
+        x = F.relu(F.max_pool2d(self.convolution3(x), 3, 2))
+
 
