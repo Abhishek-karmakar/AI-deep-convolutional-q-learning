@@ -132,4 +132,17 @@ Make the AI class which will use the forward function in it to finally join the 
 
 	 input = Variable(torch.from_numpy(np.array(inputs, dtype = np.float32)))
 
-	
+
+# Training the AI using Eligibility Trace
+
+ We'll be updating the q values after every N Steps. 
+
+	doom_env = image_preprocessing.PreprocessImage(SkipWrapper(4)(ToDiscrete("minimal")(gym.make("ppaquette/DoomCorridor-v0"))), width = 80, height = 80, grayscale = True)
+	Here we are passing the black and white image in 80 x 80 format. 
+
+ Make an AI the earlier made Body and Brain by calling the objects of those classes. 
+
+		cnn = CNN(number_actions)
+		softmax_body = SoftmaxBody(T = 1.0)
+		ai = AI(brain = cnn, body = softmax_body)
+
