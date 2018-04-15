@@ -25,8 +25,24 @@ from ppaquette_gym_doom.wrappers.action_space import ToDiscrete
 import experience_replay, image_preprocessing
 
 #part 1 - Building the AI
-    #making the brain - detects the image an what is the Q Value
-    #making the body - Use the body to specify the method how to play the action.
+    #making the brain - detects the image an what is the Q-Value
+    
+class CNN(nn.module):
+    
+    def __init__(self, number_actions):
+        super(CNN, self).__init__()
+        #first create the convolution cnnection then pass it to neural network to create the full connection
+        self.convolution1 #This will detect one featuer and pass to the next convolutional layer.
+        self.convolution2 
+        self.convolution3
+        self.fc1
+        self.fc2
+        
+#After the convolution we have to flatten the images and we get the vector to input variable. 
+    
+#making the body - Use the body to specify the method how to play the action.
+    
+#make the AI - Assemble the brain and the body
     
 
 #part 2 - Implement Deep Convolutional Q-Learning
