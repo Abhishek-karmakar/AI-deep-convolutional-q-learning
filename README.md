@@ -157,3 +157,28 @@ For every 10 steps we want to get the max points in a batch
         output = cnn(input)
         cumul_reward = 0.0 if series[-1].done else output[1].data.max
 
+Compute the comulative reward. 
+	
+	        for step in reversed(series[:-1]):
+            cumul_reward = step.reward + gamma * cumul_reward
+
+The target of the series needs to be updated with the cummulative reward in the first step. The actual learning happens after the 10 series. 
+
+Create a Moving average of 100 steps while doing the training. 
+	
+	class MA:
+    def __init__(self, size):
+        self.list_of_rewards = []
+        self.size = size
+    
+    def add(self, rewards):
+        if isinstance(rewards, list):
+            self.list_of_rewards += rewards
+        else:
+            self.list_of_rewards.append(rewards)
+        while len(self.list_of_rewards) > self.size:
+            del self.list_of_rewards[0]
+    
+    def average(self):
+        return np.mean(self.list_of_rewards)    
+

@@ -106,4 +106,34 @@ def eligibility_trace(batch):
         input = Variable(torch.from_numpy(np.array([series[0].state, series[-1].state]), dtype = np.float32)))
         output = cnn(input)
         cumul_reward = 0.0 if series[-1].done else output[1].data.max
+        for step in reversed(series[:-1]):
+            cumul_reward = step.reward + gamma * cumul_reward
+        state = series[0].state
+        target = output[0].data
+        target[series[0].action] = cumul_reward
+        inputs.append(state)
+        targets.append(target)
+    return torch.from_numpy(np.array(inputs, dtype= float32)), torch.stack(targets)
+
+#Making the moving average on 100 steps. 
+class MA:
+    def __init__(self, size):
+        self.list_of_rewards = []
+        self.size = size
+    
+    def add(self, rewards):
+        if isinstance(rewards, list):
+            self.list_of_rewards += rewards
+        else:
+            self.list_of_rewards.append(rewards)
+        while len(self.list_of_rewards) > self.size:
+            del self.list_of_rewards[0]
+    
+    def average(self):
+        return np.mean(self.list_of_rewards)  
+    
+ma = MA(100) #because we want out moving our average the AI on 100 steps. 
+        
+
+#Training the AI
     
