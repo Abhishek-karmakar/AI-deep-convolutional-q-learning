@@ -75,7 +75,12 @@ class AI:
         self.brain = brain
         self.body = body
         
-
+    def __call__(self, inputs):
+        input = Variable(torch.from_numpy(np.array(inputs, dtype = np.float32))) #so the array has float32 type variables
+        output = self.brain(input)
+        actions = self.body(output)
+        return actions.data.numpy()
+    
 #part 2 - Implement Deep Convolutional Q-Learning
     #train the AI.
     

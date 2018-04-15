@@ -123,4 +123,13 @@ Now we will make the Body of the class which will move the player based on the m
 ----------------------------
 Make the AI class which will use the forward function in it to finally join the body and the brain. 
 
+	To do the whole proagation. 
+	1.> Receiving the input images. Since we are getting them from a neural network they will be in a special type. So we'll have to format them in a special structure. The Torch structure. 
+	2.> Convert the images into a Numpy array 
+	3.> coneert the array into the torch tensor. 
+	4.> Finally put the torch tensor into the torch variable whih will contain both the Tensor and the Gradient. (for the dynamic Graph)
+	5.> once the above steps are taken then the image will be able to enter the neural network and proper propagation of the signals can take place. 
+
+	 input = Variable(torch.from_numpy(np.array(inputs, dtype = np.float32)))
+
 	
