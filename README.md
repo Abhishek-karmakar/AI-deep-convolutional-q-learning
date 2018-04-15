@@ -111,4 +111,10 @@ create a forward function
 
 Now we will make the Body of the class which will move the player based on the mind created earlier. We will use Softmax function from PyTorch
 
-	
+	The output functions of the brain will be given as the input to the body. 
+
+	It will use the softmax functions. 
+
+	There are 7 possible actions. Hence there is a distribution of 7 probablilities 
+
+	We can use the T (temperature) parameter to configure the actions. The higher the T, the lower the actions.  
