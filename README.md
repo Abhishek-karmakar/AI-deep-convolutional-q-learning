@@ -89,4 +89,20 @@
         x = F.relu(F.max_pool2d(self.convolution2(x), 3, 2))
         x = F.relu(F.max_pool2d(self.convolution3(x), 3, 2))
 
+    return x.data.view(1, -1).size(1) <-- this will create a enormus vector from the images and pass it to the full connection. 
+
+-------------------------------------
+
+	create a forward function
+        x = F.relu(F.max_pool2d(self.convolution1(x), 3, 2))
+        x = F.relu(F.max_pool2d(self.convolution2(x), 3, 2))
+        x = F.relu(F.max_pool2d(self.convolution3(x), 3, 2))
+
+    now just need to flatten the whole image. 
+
+    Then we propagate the flatten layer to the hidden layer. 
+            x = F.relu(self.fc1(x))
+
+    Then we need to propagate from the hidden layer to the output layer. 
+    		
 
