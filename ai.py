@@ -97,3 +97,13 @@ ai = AI(brain = cnn, body = softmax_body)
 n_steps = experience_replay.NStepProgress(env = doom_env, ai = ai, n_step = 10) #learning is happening every 10 steps
 memory = experience_replay.ReplayMemory(n_steps = n_steps, capacity = 10000)
 
+#n step Q learning is almost like A3C
+def eligibility_trace(batch):
+    gamma = 0.99
+    inputs = []
+    targets = []
+    for series in batch:
+        input = Variable(torch.from_numpy(np.array([series[0].state, series[-1].state]), dtype = np.float32)))
+        output = cnn(input)
+        cumul_reward = 0.0 if series[-1].done else output[1].data.max
+    

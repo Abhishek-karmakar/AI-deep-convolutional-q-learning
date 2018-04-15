@@ -149,3 +149,11 @@ Make the AI class which will use the forward function in it to finally join the 
 setting up the Eligibility trace using 10000 total steps in Eligibility trace.
 	
 		n_steps = experience_replay.NStepProgress(env = doom_env, ai = ai, n_step = 10) #learning is happening every 10 steps
+
+For every 10 steps we want to get the max points in a batch
+	    
+	    for series in batch:
+        input = Variable(torch.from_numpy(np.array([series[0].state, series[-1].state]), dtype = np.float32)))
+        output = cnn(input)
+        cumul_reward = 0.0 if series[-1].done else output[1].data.max
+
